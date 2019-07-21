@@ -2,7 +2,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := libtess_static1
+LOCAL_MODULE := libtess_core_static
 LOCAL_THIN_ARCHIVE := true
 
 TESSERACT_SRC_FILES := \
@@ -53,8 +53,9 @@ LOCAL_EXPORT_CFLAGS := $(LOCAL_CFLAGS)
 include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := libtess_static2
+LOCAL_MODULE := libtess_static
 LOCAL_THIN_ARCHIVE := true
+LOCAL_STATIC_LIBRARIES := libtess_core_static
 
 # tesseract (minus executable)
 
@@ -74,8 +75,6 @@ TESSERACT_SRC_FILES := \
 
 LOCAL_SRC_FILES := \
   $(filter-out $(BLACKLIST_SRC_FILES),$(subst $(LOCAL_PATH)/,,$(TESSERACT_SRC_FILES)))
-
-LOCAL_STATIC_LIBRARIES := libtess_static1
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -97,9 +96,22 @@ LOCAL_LDLIBS += \
   -ljnigraphics \
   -llog
 
-# common
-
+LOCAL_STATIC_LIBRARIES := libtess_static
 LOCAL_SHARED_LIBRARIES := liblept
-LOCAL_STATIC_LIBRARIES := libtess_static1 libtess_static2
 
 include $(BUILD_SHARED_LIBRARY)
+
+# command line
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := tesseract
+TESSERACT_SRC_FILES := \
+  $(TESSERACT_PATH)/api/tesseractmain.cpp
+LOCAL_SRC_FILES := \
+  $(subst $(LOCAL_PATH)/,,$(TESSERACT_SRC_FILES))
+
+LOCAL_STATIC_LIBRARIES := libtess_static liblept_static
+LOCAL_LDLIBS += \
+  -llog
+
+include $(BUILD_EXECUTABLE)

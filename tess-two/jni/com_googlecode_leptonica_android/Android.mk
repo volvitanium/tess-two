@@ -2,7 +2,8 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := liblept
+LOCAL_MODULE := liblept_static
+LOCAL_THIN_ARCHIVE := true
 
 # leptonica (minus freetype)
 
@@ -20,9 +21,17 @@ LOCAL_SRC_FILES := \
 LOCAL_CFLAGS := \
   -DHAVE_CONFIG_H
 
-LOCAL_LDLIBS := \
-  -lz
+LOCAL_C_INCLUDES += \
+  $(LOCAL_PATH) \
+  $(LEPTONICA_PATH)/src \
+  $(LIBJPEG_PATH) \
+  $(LIBPNG_PATH)
+
 LOCAL_STATIC_LIBRARIES:= libjpgt_static libpngt_static
+include $(BUILD_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := liblept
 
 # jni
 
@@ -50,5 +59,6 @@ LOCAL_CFLAGS += \
   -include $(LOCAL_PATH)/common.h
 
 # common
+LOCAL_STATIC_LIBRARIES:= liblept_static
 
 include $(BUILD_SHARED_LIBRARY)
