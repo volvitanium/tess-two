@@ -45,6 +45,9 @@ LOCAL_LDLIBS += \
   -ljnigraphics \
   -llog
 
+LOCAL_CFLAGS += \
+  -include $(LOCAL_PATH)/common.h
+
 # common
 LOCAL_SHARED_LIBRARIES:= libjpgt libpngt
 

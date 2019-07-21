@@ -43,4 +43,15 @@
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 #define LOG_ASSERT(_cond, ...) if (!_cond) __android_log_assert("conditional", LOG_TAG, __VA_ARGS__)
 
+#undef L_ERROR
+#undef L_WARNING
+#undef L_INFO
+
+#define L_ERROR(a,...) \
+      IF_SEV(L_SEVERITY_ERROR, (void) LOGE("in %s: " a, __VA_ARGS__), (void)0)
+#define L_WARNING(a,...) \
+      IF_SEV(L_SEVERITY_WARNING, (void) LOGW("in %s: " a, __VA_ARGS__), (void)0)
+#define L_INFO(a,...) \
+      IF_SEV(L_SEVERITY_INFO, (void) LOGI("in %s: " a, __VA_ARGS__), (void)0)
+
 #endif
