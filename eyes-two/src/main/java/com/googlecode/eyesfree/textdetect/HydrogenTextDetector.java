@@ -29,8 +29,6 @@ public class HydrogenTextDetector {
     private final long mNative;
 
     static {
-        System.loadLibrary("jpgt");
-        System.loadLibrary("pngt");
         System.loadLibrary("lept");
         System.loadLibrary("hydrogen");
     }

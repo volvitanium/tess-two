@@ -42,6 +42,6 @@ LOCAL_CFLAGS_arm64 := $(my_cflags_arm64)
 LOCAL_SRC_FILES_arm64 := $(my_src_files_arm)
 LOCAL_SANITIZE := never
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)
-LOCAL_LDLIBS := -lz
-LOCAL_MODULE:= libpngt
-include $(BUILD_SHARED_LIBRARY)
+LOCAL_EXPORT_LDLIBS := -lz
+LOCAL_MODULE:= libpngt_static
+include $(BUILD_STATIC_LIBRARY)

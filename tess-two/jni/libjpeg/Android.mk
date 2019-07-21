@@ -2,7 +2,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := libjpgt
+LOCAL_MODULE := libjpgt_static
 
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)
 
@@ -60,4 +60,4 @@ LOCAL_CFLAGS := \
   -Wno-pointer-sign \
   -Wno-implicit-function-declaration
 
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)

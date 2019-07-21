@@ -22,6 +22,7 @@ LOCAL_CFLAGS := \
 
 LOCAL_LDLIBS := \
   -lz
+LOCAL_STATIC_LIBRARIES:= libjpgt_static libpngt_static
 
 # jni
 
@@ -49,8 +50,5 @@ LOCAL_CFLAGS += \
   -include $(LOCAL_PATH)/common.h
 
 # common
-LOCAL_SHARED_LIBRARIES:= libjpgt libpngt
-
-LOCAL_PRELINK_MODULE:= false
 
 include $(BUILD_SHARED_LIBRARY)
