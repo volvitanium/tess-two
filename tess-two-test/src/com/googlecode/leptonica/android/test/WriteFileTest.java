@@ -21,7 +21,7 @@ import java.io.IOException;
 
 import junit.framework.TestCase;
 import android.graphics.Bitmap;
-import android.test.suitebuilder.annotation.SmallTest;
+import androidx.test.filters.SmallTest;
 
 import com.googlecode.leptonica.android.Pix;
 import com.googlecode.leptonica.android.ReadFile;

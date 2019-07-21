@@ -31,27 +31,24 @@ import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import androidx.test.rule.GrantPermissionRule;
+
 import com.googlecode.leptonica.android.Pix;
 import com.googlecode.leptonica.android.ReadFile;
 import com.googlecode.leptonica.android.WriteFile;
 import com.googlecode.tesseract.android.TessBaseAPI;
 import com.googlecode.tesseract.android.TessPdfRenderer;
 
+import org.junit.Rule;
+
 public class TessPdfRendererTest extends TestCase {
 
     @SuppressLint("SdCardPath")
     private final static String OUTPUT_PATH = "/sdcard/";
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        // Grant permission to use external storage
-        AllTests.grantPermissions(new String[] {
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        });
-    }
+    // Grant permission to use external storage
+    @Rule
+    public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
     @SmallTest
     public void testCreate() {

@@ -10,7 +10,7 @@ android {
         versionCode 1
         versionName '1.0'
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     sourceSets {
@@ -34,7 +34,10 @@ android {
 dependencies {
     implementation project(':tess-two')
 
+    // Core library
+    androidTestImplementation 'androidx.test:core:1.2.0'
+
     // AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    //androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
 }

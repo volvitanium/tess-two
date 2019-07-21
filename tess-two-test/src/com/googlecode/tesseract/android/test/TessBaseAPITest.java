@@ -27,7 +27,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.test.suitebuilder.annotation.SmallTest;
+
 import android.text.Html;
 import android.util.Pair;
 
@@ -40,6 +40,11 @@ import com.googlecode.tesseract.android.TessBaseAPI.ProgressNotifier;
 import com.googlecode.tesseract.android.TessBaseAPI.ProgressValues;
 
 import junit.framework.TestCase;
+
+import androidx.test.filters.SmallTest;
+import androidx.test.rule.GrantPermissionRule;
+
+import org.junit.Rule;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -65,14 +70,12 @@ public class TessBaseAPITest extends TestCase {
     private static final int DEFAULT_PAGE_SEG_MODE =
             TessBaseAPI.PageSegMode.PSM_SINGLE_BLOCK;
 
+    // Grant permission to use external storage
+    @Rule
+    public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
     protected void setUp() throws Exception {
         super.setUp();
-
-        // Grant permission to use external storage
-        AllTests.grantPermissions(new String[] {
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        });
 
         // Check that the data file(s) exist.
         for (String languageCode : DEFAULT_LANGUAGE.split("\\+")) {
