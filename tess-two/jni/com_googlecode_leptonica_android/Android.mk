@@ -1,9 +1,48 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := liblept
 
+LOCAL_SRC_FILES += \
+  box.cpp \
+  boxa.cpp \
+  pix.cpp \
+  pixa.cpp \
+  utilities.cpp \
+  readfile.cpp \
+  writefile.cpp \
+  jni.cpp
+
+LOCAL_EXPORT_C_INCLUDES := \
+  $(LOCAL_PATH) \
+  $(LEPTONICA_PATH)/src
+
+LOCAL_C_INCLUDES := \
+  $(LOCAL_EXPORT_C_INCLUDES) \
+  $(LIBJPEG_PATH) \
+  $(LIBPNG_PATH)
+
+LOCAL_LDLIBS += \
+  -ljnigraphics \
+  -llog
+
+LOCAL_STATIC_LIBRARIES:= liblept_static
+
+include $(BUILD_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := liblept_static
 LOCAL_THIN_ARCHIVE := true
+
+LOCAL_CFLAGS := \
+  -DHAVE_CONFIG_H \
+  -include $(LOCAL_PATH)/common.h
+
+LOCAL_EXPORT_C_INCLUDES := \
+  $(LOCAL_PATH) \
+  $(LEPTONICA_PATH)/src
+
+LOCAL_PATH := $(LEPTONICA_PATH)/src
 
 # leptonica (minus freetype)
 
@@ -18,47 +57,10 @@ LEPTONICA_SRC_FILES := \
 LOCAL_SRC_FILES := \
   $(filter-out $(BLACKLIST_SRC_FILES),$(LEPTONICA_SRC_FILES))
 
-LOCAL_CFLAGS := \
-  -DHAVE_CONFIG_H
-
 LOCAL_C_INCLUDES += \
-  $(LOCAL_PATH) \
-  $(LEPTONICA_PATH)/src \
+  $(LOCAL_EXPORT_C_INCLUDES) \
   $(LIBJPEG_PATH) \
   $(LIBPNG_PATH)
 
 LOCAL_STATIC_LIBRARIES:= libjpgt_static libpngt_static
 include $(BUILD_STATIC_LIBRARY)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := liblept
-
-# jni
-
-LOCAL_SRC_FILES += \
-  box.cpp \
-  boxa.cpp \
-  pix.cpp \
-  pixa.cpp \
-  utilities.cpp \
-  readfile.cpp \
-  writefile.cpp \
-  jni.cpp
-  
-LOCAL_C_INCLUDES += \
-  $(LOCAL_PATH) \
-  $(LEPTONICA_PATH)/src \
-  $(LIBJPEG_PATH) \
-  $(LIBPNG_PATH)
-
-LOCAL_LDLIBS += \
-  -ljnigraphics \
-  -llog
-
-LOCAL_CFLAGS += \
-  -include $(LOCAL_PATH)/common.h
-
-# common
-LOCAL_STATIC_LIBRARIES:= liblept_static
-
-include $(BUILD_SHARED_LIBRARY)

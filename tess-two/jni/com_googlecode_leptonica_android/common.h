@@ -19,7 +19,7 @@
 
 #include <jni.h>
 #include <assert.h>
-#include <allheaders.h>
+#include "allheaders.h"
 #include <android/log.h>
 #include <asm/byteorder.h>
 

@@ -1,9 +1,34 @@
 LOCAL_PATH := $(call my-dir)
 
-include $(CLEAR_VARS)
+### jni
 
+include $(CLEAR_VARS)
+LOCAL_MODULE := libtess
+
+LOCAL_SRC_FILES += \
+  pageiterator.cpp \
+  resultiterator.cpp \
+  tessbaseapi.cpp
+
+LOCAL_C_INCLUDES += \
+  $(LOCAL_PATH)
+
+LOCAL_LDLIBS += \
+  -ljnigraphics \
+  -llog
+
+LOCAL_STATIC_LIBRARIES := libtess_static
+LOCAL_SHARED_LIBRARIES := liblept
+
+include $(BUILD_SHARED_LIBRARY)
+
+### core static
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := libtess_core_static
 LOCAL_THIN_ARCHIVE := true
+
+LOCAL_PATH := $(TESSERACT_PATH)
 
 TESSERACT_SRC_FILES := \
   $(wildcard $(TESSERACT_PATH)/arch/*.cpp) \
@@ -32,8 +57,7 @@ LOCAL_C_INCLUDES := \
   $(TESSERACT_PATH)/opencl \
   $(TESSERACT_PATH)/textord \
   $(TESSERACT_PATH)/viewer \
-  $(TESSERACT_PATH)/wordrec \
-  $(LEPTONICA_PATH)/src
+  $(TESSERACT_PATH)/wordrec
 
 LOCAL_CFLAGS := \
   -DGRAPHICS_DISABLED \
@@ -49,13 +73,15 @@ LOCAL_CFLAGS := \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_C_INCLUDES)
 LOCAL_EXPORT_CFLAGS := $(LOCAL_CFLAGS)
+LOCAL_STATIC_LIBRARIES += liblept_static # to inherit C_INCLUDE
 
 include $(BUILD_STATIC_LIBRARY)
+
+### other static
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := libtess_static
 LOCAL_THIN_ARCHIVE := true
-LOCAL_STATIC_LIBRARIES := libtess_core_static
 
 # tesseract (minus executable)
 
@@ -76,32 +102,12 @@ TESSERACT_SRC_FILES := \
 LOCAL_SRC_FILES := \
   $(filter-out $(BLACKLIST_SRC_FILES),$(subst $(LOCAL_PATH)/,,$(TESSERACT_SRC_FILES)))
 
+LOCAL_STATIC_LIBRARIES := libtess_core_static
+LOCAL_STATIC_LIBRARIES += liblept_static # to inherit C_INCLUDE
+
 include $(BUILD_STATIC_LIBRARY)
 
-# jni
-
-include $(CLEAR_VARS)
-
-LOCAL_MODULE := libtess
-
-LOCAL_SRC_FILES += \
-  pageiterator.cpp \
-  resultiterator.cpp \
-  tessbaseapi.cpp
-
-LOCAL_C_INCLUDES += \
-  $(LOCAL_PATH)
-
-LOCAL_LDLIBS += \
-  -ljnigraphics \
-  -llog
-
-LOCAL_STATIC_LIBRARIES := libtess_static
-LOCAL_SHARED_LIBRARIES := liblept
-
-include $(BUILD_SHARED_LIBRARY)
-
-# command line
+### command line
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := tesseract
