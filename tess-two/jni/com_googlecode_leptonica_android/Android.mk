@@ -13,6 +13,9 @@ LOCAL_SRC_FILES += \
   writefile.cpp \
   jni.cpp
 
+LOCAL_EXPORT_CFLAGS := \
+  -DHAVE_CONFIG_H
+
 LOCAL_EXPORT_C_INCLUDES := \
   $(LOCAL_PATH) \
   $(LEPTONICA_PATH)/src
@@ -34,8 +37,11 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := liblept_static
 LOCAL_THIN_ARCHIVE := true
 
+LOCAL_EXPORT_CFLAGS := \
+  -DHAVE_CONFIG_H
+
 LOCAL_CFLAGS := \
-  -DHAVE_CONFIG_H \
+  $(LOCAL_EXPORT_CFLAGS) \
   -include $(LOCAL_PATH)/common.h
 
 LOCAL_EXPORT_C_INCLUDES := \
@@ -43,6 +49,8 @@ LOCAL_EXPORT_C_INCLUDES := \
   $(LEPTONICA_PATH)/src
 
 LOCAL_PATH := $(LEPTONICA_PATH)/src
+
+get-src-file-target-cflags += $(if $(filter bmpio.c,$1),-Wno-address-of-packed-member,)
 
 # leptonica (minus freetype)
 

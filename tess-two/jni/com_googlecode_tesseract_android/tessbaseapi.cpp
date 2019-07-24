@@ -94,9 +94,9 @@ bool cancelFunc(void* cancel_this, int words) {
 /**
  * Callback for Tesseract's monitor to update progress.
  */
-bool progressJavaCallback(void* progress_this, int progress, int left, int right,
-		int top, int bottom) {
-  native_data_t *nat = (native_data_t*)progress_this;
+bool progressJavaCallback(ETEXT_DESC* monitor, int left, int right, int top, int bottom) {
+  native_data_t *nat = (native_data_t*)monitor->cancel_this;
+  l_int32 progress = monitor->progress;
   if (nat->isStateValid() && nat->currentTextBox != NULL) {
     if (progress > nat->lastProgress || left != 0 || right != 0 || top != 0 || bottom != 0) {
       int x, y, width, height;
@@ -547,10 +547,9 @@ jstring Java_com_googlecode_tesseract_android_TessBaseAPI_nativeGetHOCRText(JNIE
   nat->initStateVariables(env, &thiz);
 
   ETEXT_DESC monitor;
-  monitor.progress_callback = progressJavaCallback;
+  monitor.progress_callback2 = progressJavaCallback;
   monitor.cancel = cancelFunc;
   monitor.cancel_this = nat;
-  monitor.progress_this = nat;
 
   char *text = nat->api.GetHOCRText(&monitor, page);
 

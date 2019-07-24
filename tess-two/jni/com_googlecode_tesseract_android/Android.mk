@@ -1,4 +1,5 @@
 LOCAL_PATH := $(call my-dir)
+TESSERACT_PATH := $(TESSERACT_PATH)/src
 
 ### jni
 
@@ -28,6 +29,8 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := libtess_core_static
 LOCAL_THIN_ARCHIVE := true
 
+LOCAL_C_INCLUDES += $(LOCAL_PATH)
+
 LOCAL_PATH := $(TESSERACT_PATH)
 
 TESSERACT_SRC_FILES := \
@@ -39,23 +42,26 @@ TESSERACT_SRC_FILES := \
   $(wildcard $(TESSERACT_PATH)/cutil/*.cpp) \
   $(wildcard $(TESSERACT_PATH)/dict/*.cpp) \
 
-LOCAL_SRC_FILES := \
-  $(subst $(LOCAL_PATH)/,,$(TESSERACT_SRC_FILES))
+BLACKLIST_SRC_FILES := \
+    %sse.cpp \
+    %avx2.cpp \
+    %avx.cpp \
 
-LOCAL_C_INCLUDES := \
+LOCAL_SRC_FILES := \
+  $(filter-out $(BLACKLIST_SRC_FILES),$(subst $(LOCAL_PATH)/,,$(TESSERACT_SRC_FILES)))
+
+LOCAL_C_INCLUDES += \
   $(TESSERACT_PATH)/api \
   $(TESSERACT_PATH)/arch \
   $(TESSERACT_PATH)/ccmain \
   $(TESSERACT_PATH)/ccstruct \
   $(TESSERACT_PATH)/ccutil \
   $(TESSERACT_PATH)/classify \
-  $(TESSERACT_PATH)/cube \
   $(TESSERACT_PATH)/cutil \
   $(TESSERACT_PATH)/dict \
   $(TESSERACT_PATH)/lstm \
-  $(TESSERACT_PATH)/neural_networks/runtime \
-  $(TESSERACT_PATH)/opencl \
   $(TESSERACT_PATH)/textord \
+  $(TESSERACT_PATH)/training \
   $(TESSERACT_PATH)/viewer \
   $(TESSERACT_PATH)/wordrec
 
@@ -63,13 +69,17 @@ LOCAL_CFLAGS := \
   -DGRAPHICS_DISABLED \
   --std=c++11 \
   -DUSE_STD_NAMESPACE \
-  -DVERSION=\"Android\" \
+  -DPACKAGE_VERSION=\"4.1.0\" \
+  -DTESSERACT_MAJOR_VERSION=4 \
+  -DTESSERACT_MINOR_VERSION=1 \
+  -DTESSERACT_MICRO_VERSION=0 \
   -include ctype.h \
   -include unistd.h \
   -fpermissive \
   -Wno-deprecated \
-  -Wno-shift-negative-value \
-  -D_GLIBCXX_PERMIT_BACKWARD_HASH   # fix for android-ndk-r8e/sources/cxx-stl/gnu-libstdc++/4.6/include/ext/hash_map:61:30: fatal error: backward_warning.h: No such file or directory
+  -Wno-shift-negative-value
+
+get-src-file-target-cflags += $(if $(filter ccutil/fileio.cpp,$1),-Dglob(a,b,c,d)=0 -Dglobfree(x)=0,)
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_C_INCLUDES)
 LOCAL_EXPORT_CFLAGS := $(LOCAL_CFLAGS)
@@ -93,8 +103,6 @@ TESSERACT_SRC_FILES := \
   $(wildcard $(TESSERACT_PATH)/api/*.cpp) \
   $(wildcard $(TESSERACT_PATH)/ccmain/*.cpp) \
   $(wildcard $(TESSERACT_PATH)/lstm/*.cpp) \
-  $(wildcard $(TESSERACT_PATH)/neural_networks/runtime/*.cpp) \
-  $(wildcard $(TESSERACT_PATH)/opencl/*.cpp) \
   $(wildcard $(TESSERACT_PATH)/textord/*.cpp) \
   $(wildcard $(TESSERACT_PATH)/viewer/*.cpp) \
   $(wildcard $(TESSERACT_PATH)/wordrec/*.cpp)
