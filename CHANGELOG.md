@@ -1,7 +1,7 @@
 # Change Log
 
-## [Unreleased](https://github.com/rmtheis/tess-two/tree/HEAD)
-[Full Changelog](https://github.com/rmtheis/tess-two/compare/9.0.0...HEAD)
+## [Unreleased](https://github.com/alexcohn/tess-two/tree/HEAD)
+[Full Changelog](https://github.com/alexcohn/tess-two/compare/9.0.0...HEAD)
 
 ## [9.0.0](https://github.com/rmtheis/tess-two/tree/9.0.0) (2018-04-20)
 [Full Changelog](https://github.com/rmtheis/tess-two/compare/8.0.0...9.0.0)

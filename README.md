@@ -8,8 +8,8 @@ image processing libraries.
 
 This project works with:
 
- - Tesseract 3.05
- - Leptonica 1.74.1
+ - Tesseract 4.1 (submodule)
+ - Leptonica 1.9 (submodule)
  - libjpeg 9b
  - libpng 1.6.25
  
@@ -30,7 +30,7 @@ The `tess-two-test` module contains instrumented unit tests for tess-two.
 ## Pre-requisites
 
 * Android 2.3 or higher
-* A v3.04 [trained data file][tessdata] for a language. Data files must be 
+* A v4.1 or 3.02 [trained data file][tessdata] for a language. Data files must be 
 copied to the Android device in a subdirectory named `tessdata`.
 
 ## Usage
@@ -92,6 +92,7 @@ provided to developers through the Google Play Services library: The
 currently works for Latin-based characters.
 
 [tesseract-android-tools]: https://github.com/alanv/tesseract-android-tools
+[Tesseract4Android]: https://github.com/adaptech-cz/Tesseract4Android
 [tesseract-ocr]: https://github.com/tesseract-ocr/tesseract
 [leptonica]: https://github.com/DanBloomberg/leptonica
 [eyes-free]: https://github.com/rmtheis/eyes-free

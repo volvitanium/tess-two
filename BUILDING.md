@@ -46,6 +46,16 @@ Run the following commands:
     cd tess
     gradlew assemble
 
+On all above platforms you can build a command-line static banary, e.g.
+
+    ndk-build -C tess-two-git/tess-two tesseract APP_ABI=arm64-v8a
+    
+It can be deployed to `/data/local/tmp` of a compatible Android device and run from adb shell:  
+
+    adb shell time tesseract --tessdata-dir tessdata imagename outputbase
+    
+With v.4.1 you can use new or old data files.
+
 # Importing
 
 After building, the code that is generated may be imported into your app
