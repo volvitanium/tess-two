@@ -20,7 +20,8 @@ LOCAL_SRC_FILES += \
 
 LOCAL_C_INCLUDES += \
   $(LOCAL_PATH)/src \
-  $(LOCAL_PATH)/include/leptonica
+  $(ROOT_PATH)/tess-two/jni/com_googlecode_leptonica_android \
+  $(ROOT_PATH)/leptonica/src
 
 LOCAL_LDLIBS += \
   -llog
