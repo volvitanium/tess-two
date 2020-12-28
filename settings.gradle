@@ -1,3 +1,4 @@
 include ':eyes-two'
 include ':tess-two'
 include ':tess-two-test'
+rootProject.name = 'tess-two.project'
