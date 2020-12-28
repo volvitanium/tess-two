@@ -1,3 +1,10 @@
+## NO LONGER MAINTAINED
+
+This project won't be receiving further updates or maintenance.
+
+Please consider trying one of the forks of this project such as 
+[https://github.com/alexcohn/tess-two](https://github.com/alexcohn/tess-two).
+
 # tess-two
 
 A fork of Tesseract Tools for Android 
@@ -39,7 +46,7 @@ To use tess-two from your app, edit your app module's `build.gradle` file to add
 tess-two as an external dependency:
 
 	dependencies {
-	    implementation 'com.rmtheis:tess-two:9.0.0'
+	    implementation 'com.rmtheis:tess-two:9.1.0'
 	}
 	
 [Javadoc][javadoc] is available.
@@ -62,11 +69,6 @@ The [change log](CHANGELOG.md) shows what's new in each version.
 
 * Stack Overflow: https://stackoverflow.com/questions/tagged/tess-two
 * tesseract-ocr: https://groups.google.com/forum/#!forum/tesseract-ocr
-
-If you've found an error in this project, please file an issue.
-
-Patches are encouraged, and may be submitted by forking this project and 
-submitting a pull request through GitHub. 
 
 ## License
 
